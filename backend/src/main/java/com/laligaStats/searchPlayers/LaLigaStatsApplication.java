@@ -1,4 +1,4 @@
-package com.laligaStats.soccerproject;
+package com.laligaStats.searchPlayers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
