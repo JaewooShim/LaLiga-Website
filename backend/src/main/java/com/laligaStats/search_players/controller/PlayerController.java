@@ -1,7 +1,7 @@
-package com.laligaStats.searchPlayers.controller;
+package com.laligaStats.search_players.controller;
 
-import com.laligaStats.searchPlayers.entity.PlayerEntity;
-import com.laligaStats.searchPlayers.service.PlayerService;
+import com.laligaStats.search_players.entity.PlayerEntity;
+import com.laligaStats.search_players.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

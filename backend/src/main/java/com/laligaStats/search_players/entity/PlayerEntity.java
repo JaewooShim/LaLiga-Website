@@ -1,4 +1,4 @@
-package com.laligaStats.searchPlayers.entity;
+package com.laligaStats.search_players.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

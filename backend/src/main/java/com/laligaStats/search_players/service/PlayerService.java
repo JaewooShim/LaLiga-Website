@@ -1,7 +1,7 @@
-package com.laligaStats.searchPlayers.service;
+package com.laligaStats.search_players.service;
 
-import com.laligaStats.searchPlayers.entity.PlayerEntity;
-import com.laligaStats.searchPlayers.repository.PlayerRepository;
+import com.laligaStats.search_players.entity.PlayerEntity;
+import com.laligaStats.search_players.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
