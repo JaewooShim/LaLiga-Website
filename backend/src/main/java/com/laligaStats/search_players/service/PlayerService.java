@@ -1,7 +1,7 @@
-package com.laligaStats.soccerproject.service;
+package com.laligaStats.search_players.service;
 
-import com.laligaStats.soccerproject.entity.PlayerEntity;
-import com.laligaStats.soccerproject.repository.PlayerRepository;
+import com.laligaStats.search_players.entity.PlayerEntity;
+import com.laligaStats.search_players.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +9,6 @@ import java.util.List;
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
-
 
     public PlayerService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
@@ -33,7 +32,7 @@ public class PlayerService {
     }
 
     // some players may have multiple positions
-    public List<PlayerEntity>  getbyPos(String position) {
+    public List<PlayerEntity> getbyPos(String position) {
         return playerRepository.findAll().stream()
                 .filter(player -> player.getPositions() != null &&
                         player.getPositions().toLowerCase().contains(position.toLowerCase())).toList();
