@@ -9,19 +9,19 @@ import lombok.Data;
 public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String player_name;
-    String nation;
-    String positions;
-    Integer age;
-    Integer matches_played;
-    Double goals;
-    Double assists;
-    Double penalty_goals;
-    Double yellow_card;
-    Double red_card;
-    Double expected_goals;
-    Double expected_assists;
-    String team_name;
+    private String player_name;
+    private String nation;
+    private String positions;
+    private Integer age;
+    private Integer matches_played;
+    private Double goals;
+    private Double assists;
+    private Double penalty_goals;
+    private Double yellow_card;
+    private Double red_card;
+    private Double expected_goals;
+    private Double expected_assists;
+    private String team_name;
 }
