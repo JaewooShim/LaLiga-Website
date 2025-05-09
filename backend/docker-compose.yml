@@ -14,19 +14,25 @@ services:
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d:ro
       - pg_data:/var/lib/postgresql/data
-#  scrapper:
-#    container_name: scraper
-#    build: ./scrapper
-#    depends_on:
-#      - db
-#    env_file:
-#      - .env
-#    environment:
-#      DB_HOST: ${DB_HOST}
-#      DB_PORT: ${DB_PORT}
-#      DB_USER: ${DB_USER}
-#      DB_PASSWORD: ${DB_PASSWORD}
-#      DB_NAME: ${DB_NAME}
-#    command: ["python", "scraper.py"]
+  selenium:
+    image: seleniarm/standalone-chromium:latest
+    ports:
+      - "4444:4444"
+    shm_size: 2g
+  scrapper:
+    container_name: scraper
+    build: ./scrapper
+    depends_on:
+      - db
+      - selenium
+    env_file:
+      - .env
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+    command: ["python", "scraper.py"]
 volumes:
   pg_data:
