@@ -16,6 +16,7 @@ services:
       - pg_data:/var/lib/postgresql/data
   selenium:
     image: seleniarm/standalone-chromium:latest
+    container_name: selenium
     ports:
       - "4444:4444"
     shm_size: 2g

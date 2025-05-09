@@ -77,6 +77,9 @@ overall_table = soup.find('table', 'stats_table')
 links = [f'https://fbref.com{link.get("href")}'for link in
          overall_table.find_all('a') if '/squads/' in link.get('href')]
 
+teams = []
+nations = set()
+
 for link in links:
     team_name = link.split('/')[-1].replace('-Stats', '').replace('-', ' ')
 
@@ -109,12 +112,15 @@ for link in links:
     # only keep the year part
     data['Age'] = data['Age'].apply(
         lambda age: age.split('-')[0] if isinstance(age, str) else None)
-
+    # replace nan -> None
     data['Nation'] = data['Nation'].where(pd.notna(data['Nation']), None)
     data['Pos'] = data['Pos'].where(pd.notna(data['Pos']), None)
 
     # add team name column
     data['Team'] = team_name
+
+    teams.append(team_name)
+    nations.update(nation for nation in data['Nation'] if nation is not None)
 
     for _, row in data.iterrows():
         try:
@@ -131,6 +137,30 @@ for link in links:
 
     # delaying each loop by 5 secs to avoid getting blocked from scrapping
     time.sleep(5)
+
+# insert every team into teams table
+for team in teams:
+    try:
+        cur.execute("""
+            INSERT INTO teams (team_name)
+            VALUES (%s)
+        """, (team,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+
+# insert all nations into nations table
+for nation in nations:
+    print(nation)
+    print(type(nation))
+    try:
+        cur.execute("""
+            INSERT INTO nations (nation)
+            VALUES (%s)
+        """, (nation,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
 
 cur.close()
 conn.close()
