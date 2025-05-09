@@ -120,7 +120,7 @@ for link in links:
     data['Team'] = team_name
 
     teams.append(team_name)
-    nations.update(nation for nation in data['Nation'] if nation is not None)
+    nations.update(data['Nation'])
 
     for _, row in data.iterrows():
         try:
