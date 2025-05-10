@@ -1,8 +1,8 @@
 CREATE TABLE player_data(
     id SERIAL PRIMARY KEY,
-    player_name VARCHAR(100),
-    nation VARCHAR(50),
-    positions VARCHAR(50),
+    player_name VARCHAR(50),
+    nation VARCHAR(3),
+    positions VARCHAR(10),
     age INTEGER,
     matches_played INTEGER,
     goals FLOAT,
@@ -12,5 +12,5 @@ CREATE TABLE player_data(
     red_card FLOAT,
     expected_goals FLOAT,
     expected_assists FLOAT,
-    team_name VARCHAR(100)
+    team_name VARCHAR(20)
 );
