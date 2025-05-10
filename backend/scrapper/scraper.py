@@ -112,8 +112,10 @@ for link in links:
     # only keep the year part
     data['Age'] = data['Age'].apply(
         lambda age: age.split('-')[0] if isinstance(age, str) else None)
-    # replace nan -> None
-    data['Nation'] = data['Nation'].where(pd.notna(data['Nation']), None)
+    # only three letters code for nations
+    data['Nation'] = data['Nation'].apply(
+        lambda n: n.split(' ')[1] if pd.notna(n) else None)
+    # nan -> None
     data['Pos'] = data['Pos'].where(pd.notna(data['Pos']), None)
 
     # add team name column
@@ -151,8 +153,6 @@ for team in teams:
 
 # insert all nations into nations table
 for nation in nations:
-    print(nation)
-    print(type(nation))
     try:
         cur.execute("""
             INSERT INTO nations (nation)
@@ -164,5 +164,4 @@ for nation in nations:
 
 cur.close()
 conn.close()
-print("data inserted.")
 driver.quit()
