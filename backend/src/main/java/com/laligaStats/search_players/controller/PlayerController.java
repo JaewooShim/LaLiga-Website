@@ -29,7 +29,6 @@ public class PlayerController {
 
     @GetMapping("/pos")
     public List<PlayerEntity> getPlayersebyPos(@RequestParam String pos) {
-        log.debug(pos);
         return playerService.getbyPos(pos);
     }
 

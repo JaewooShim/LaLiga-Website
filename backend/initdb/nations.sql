@@ -1,4 +1,5 @@
 CREATE TABLE nations(
   id SERIAL PRIMARY KEY,
-  nation VARCHAR(50) UNIQUE NOT NULL
+--  country code
+  nation VARCHAR(3) UNIQUE NOT NULL
 );
