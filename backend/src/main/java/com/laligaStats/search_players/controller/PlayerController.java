@@ -1,7 +1,7 @@
-package com.laligaStats.soccerproject.controller;
+package com.laligaStats.search_players.controller;
 
-import com.laligaStats.soccerproject.entity.PlayerEntity;
-import com.laligaStats.soccerproject.service.PlayerService;
+import com.laligaStats.search_players.entity.PlayerEntity;
+import com.laligaStats.search_players.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/players")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -29,7 +29,6 @@ public class PlayerController {
 
     @GetMapping("/pos")
     public List<PlayerEntity> getPlayersebyPos(@RequestParam String pos) {
-        log.debug(pos);
         return playerService.getbyPos(pos);
     }
 
