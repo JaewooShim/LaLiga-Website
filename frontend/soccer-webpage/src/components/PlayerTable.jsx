@@ -4,7 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Flag from "react-world-flags";
 import { Tooltip } from "react-tooltip";
 
@@ -113,11 +113,10 @@ const columns = [
 ];
 
 const PlayerTable = ({ data }) => {
-  const [copiedData, setCopiedData] = useState(data);
   const [visibleRows, setVisibleRows] = useState(15);
 
   const table = useReactTable({
-    data: copiedData,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
