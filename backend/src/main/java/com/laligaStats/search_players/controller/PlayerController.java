@@ -38,7 +38,7 @@ public class PlayerController {
     }
 
     @GetMapping("/name")
-    public List<PlayerEntity> getPlayersebyName(@RequestParam String name) {
-        return playerService.getbyName(name);
+    public List<PlayerEntity> searchByName(@RequestParam String name) {
+        return playerService.searchByName(name);
     }
 }
