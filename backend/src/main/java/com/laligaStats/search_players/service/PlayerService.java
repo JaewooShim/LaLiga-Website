@@ -21,9 +21,7 @@ public class PlayerService {
     }
 
     public List<PlayerEntity> getbyName(String name) {
-        return playerRepository.findAll().stream()
-                .filter(player -> player.getPlayer_name().toLowerCase()
-                        .contains(name.toLowerCase())).toList();
+        return playerRepository.findByPrefix(name.toLowerCase());
     }
 
     public List<PlayerEntity> getbyTeam(String team) {
