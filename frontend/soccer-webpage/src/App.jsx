@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Search from "./pages/Search";
+import Search from "./pages/Search/Search";
 import Nation from "./pages/Nation";
 import Position from "./pages/Position";
 import Navbar from "./components/Navbar";
@@ -31,15 +31,19 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home teams={teams} />} />
-        <Route path="/search" Component={Search} />
-        <Route path="/nation" element={<Nation nations={nations} />} />
-        <Route path="/position" Component={Position} />
-        <Route path="/team/:teamName" Component={TeamInfo} />
-        <Route path="/nation/details/:nationCode" Component={NationInfo} />
-        <Route path="/position/details/:posCode" Component={PositionInfo} />
-      </Routes>
+      <div className="pt-35 bg-gray-700 min-h-screen">
+        <div className="container mx-auto">
+          <Routes>
+            <Route path="/" element={<Home teams={teams}/>} />
+            <Route path="/search" Component={Search} />
+            <Route path="/nation" element={<Nation nations={nations} />} />
+            <Route path="/position" Component={Position} />
+            <Route path="/team/:teamName" Component={TeamInfo} />
+            <Route path="/nation/details/:nationCode" Component={NationInfo} />
+            <Route path="/position/details/:posCode" Component={PositionInfo} />
+          </Routes>
+        </div>
+      </div>
     </>
   );
 }
