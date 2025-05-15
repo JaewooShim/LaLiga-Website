@@ -14,3 +14,6 @@ CREATE TABLE player_data(
     expected_assists FLOAT,
     team_name VARCHAR(20)
 );
+
+CREATE EXTENSION pg_trgm;
+CREATE INDEX gin_name_idx ON player_data USING gin (player_name gin_trgm_ops);
