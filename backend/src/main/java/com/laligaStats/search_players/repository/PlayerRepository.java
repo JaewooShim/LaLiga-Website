@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
-    @Query(value = "SELECT * FROM player_data WHERE player_name ILIKE CONCAT(:prefix, '%') " +
-            "ORDER BY player_name LIMIT 15", nativeQuery = true)
+    @Query(value = "SELECT * FROM player_data WHERE player_name ILIKE CONCAT('%', :prefix, '%') " +
+            "ORDER BY CASE WHEN player_name ILIKE CONCAT(:prefix, '%') THEN 0 ELSE 1 END, player_name " +
+            "LIMIT 15", nativeQuery = true)
     List<PlayerEntity> findByPrefix(@Param("prefix") String prefix);
 }
