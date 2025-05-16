@@ -32,7 +32,7 @@ function App() {
     <>
       <Navbar />
       <div className="pt-35 bg-gray-700 min-h-screen">
-        <div className="container mx-auto">
+        <div className="container mx-auto flex flex-wrap justify-center">
           <Routes>
             <Route path="/" element={<Home teams={teams}/>} />
             <Route path="/search" Component={Search} />
