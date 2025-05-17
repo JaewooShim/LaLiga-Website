@@ -4,7 +4,10 @@ import com.laligaStats.search_players.entity.PlayerEntity;
 import com.laligaStats.search_players.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
@@ -30,9 +33,9 @@ public class PlayerService {
     }
 
     // some players may have multiple positions
-    public List<PlayerEntity> getbyPos(String position) {
-        return playerRepository.findAll().stream()
-                .filter(player -> player.getPositions() != null &&
-                        player.getPositions().toLowerCase().contains(position.toLowerCase())).toList();
+    public List<PlayerEntity> getbyPos(List<String> positions) {
+        String[] posArray = positions.toArray(new String[0]);
+        return playerRepository.findByPos(posArray);
+
     }
 }

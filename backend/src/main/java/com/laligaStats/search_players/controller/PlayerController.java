@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class PlayerController {
     }
 
     @GetMapping("/pos")
-    public List<PlayerEntity> getPlayersebyPos(@RequestParam String pos) {
+    public List<PlayerEntity> getPlayersebyPos(@RequestParam List<String> pos) {
         return playerService.getbyPos(pos);
     }
 

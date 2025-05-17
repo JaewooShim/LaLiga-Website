@@ -12,4 +12,7 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
             "ORDER BY CASE WHEN player_name ILIKE CONCAT(:prefix, '%') THEN 0 ELSE 1 END, player_name " +
             "LIMIT 15", nativeQuery = true)
     List<PlayerEntity> findByPrefix(@Param("prefix") String prefix);
+
+    @Query(value = "SELECT * FROM player_data WHERE positions @> CAST(:posArray AS text[])", nativeQuery = true)
+    List<PlayerEntity> findByPos(@Param("posArray") String[] posArray);
 }
