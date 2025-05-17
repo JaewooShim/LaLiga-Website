@@ -246,14 +246,17 @@ const isoCountries = {
     'ZW' : 'Zimbabwe',
     'ENG': 'England', 
     'SCT': 'Scotland', 
-    'WLS': 'Wales'
+    'WLS': 'Wales',
+    'XK' : 'Kosovo'
 };
 
 function CountryName (countryCode) {
-    if (isoCountries.hasOwnProperty(countryCode)) {
-        return isoCountries[countryCode];
+    if (countryCode == null) return countryCode;
+    const country = countryCode.toUpperCase();
+    if (isoCountries.hasOwnProperty(country)) {
+        return isoCountries[country];
     } else {
-        return countryCode;
+        return country;
     }
 }
 
