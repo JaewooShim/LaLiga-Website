@@ -3,6 +3,8 @@ package com.laligaStats.search_players.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "player_data")
 @Data
@@ -13,7 +15,8 @@ public class PlayerEntity {
 
     private String player_name;
     private String nation;
-    private String positions;
+    @Column(columnDefinition = "text[]")
+    private List<String> positions;
     private Integer age;
     private Integer matches_played;
     private Double goals;

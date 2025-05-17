@@ -2,7 +2,7 @@ CREATE TABLE player_data(
     id SERIAL PRIMARY KEY,
     player_name VARCHAR(50),
     nation VARCHAR(3),
-    positions VARCHAR(10),
+    positions TEXT[],
     age INTEGER,
     matches_played INTEGER,
     goals FLOAT,
