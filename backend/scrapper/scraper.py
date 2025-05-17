@@ -125,12 +125,15 @@ for link in links:
     nations.update(data['Nation'])
 
     for _, row in data.iterrows():
+        pos_list = []
+        if row['Pos'] is not None:
+            pos_list = [pos.strip() for pos in row['Pos'].split(',')]
         try:
             cur.execute("""
                 INSERT INTO player_data (player_name, nation, positions, age, matches_played,
                 goals, assists, penalty_goals, yellow_card, red_card, expected_goals, expected_assists, team_name)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (row['Player'], row['Nation'], row['Pos'], row['Age'],
+            """, (row['Player'], row['Nation'], pos_list, row['Age'],
                   row['MP'], row['Gls'], row['Ast'], row['PK'], row['CrdY'],
                   row['CrdR'], row['xG'], row['xAG'], row['Team']))
             conn.commit()
