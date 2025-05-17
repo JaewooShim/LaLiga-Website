@@ -2,7 +2,7 @@ CREATE TABLE player_data(
     id SERIAL PRIMARY KEY,
     player_name VARCHAR(50),
     nation VARCHAR(3),
-    positions VARCHAR(10),
+    positions TEXT[],
     age INTEGER,
     matches_played INTEGER,
     goals FLOAT,
@@ -14,3 +14,6 @@ CREATE TABLE player_data(
     expected_assists FLOAT,
     team_name VARCHAR(20)
 );
+
+CREATE EXTENSION pg_trgm;
+CREATE INDEX gin_name_idx ON player_data USING gin (player_name gin_trgm_ops);
