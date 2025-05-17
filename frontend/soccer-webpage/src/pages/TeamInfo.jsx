@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PlayerTable from "../components/PlayerTable";
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 const TeamInfo = () => {
   const { teamName } = useParams();
@@ -10,7 +10,6 @@ const TeamInfo = () => {
     axios
       .get(`http://localhost:8080/api/players/team?team=${teamName}`)
       .then((res) => {
-        console.log(res.data);
         setPlayers(res.data);
       })
       .catch((err) => {
