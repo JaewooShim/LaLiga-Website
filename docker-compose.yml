@@ -14,15 +14,38 @@ services:
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d:ro
       - pg_data:/var/lib/postgresql/data
+
   selenium:
     image: seleniarm/standalone-chromium:latest
     container_name: selenium
+    restart: always
     ports:
       - "4444:4444"
     shm_size: 2g
-  scrapper:
+  
+  backend:
+    container_name: backend
+    build: ./backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - .env
+  
+  frontend:
+    container_name: frontend
+    build: ./frontend/soccer-webpage
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      
+  scraper:
     container_name: scraper
-    build: ./scrapper
+    build: ./scraper
     depends_on:
       - db
       - selenium

@@ -12,7 +12,9 @@ CREATE TABLE player_data(
     red_card FLOAT,
     expected_goals FLOAT,
     expected_assists FLOAT,
-    team_name VARCHAR(20)
+    team_name VARCHAR(20),
+    player_uid TEXT,
+    UNIQUE (player_uid)
 );
 
 CREATE EXTENSION pg_trgm;

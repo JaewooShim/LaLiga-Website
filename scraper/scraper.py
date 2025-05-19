@@ -97,6 +97,15 @@ for link in links:
     # want the first table as well
     players_stats = soup.find('table', class_='stats_table')
 
+    # extract unique ids for the players
+    player_ids = []
+    for row in players_stats.find('tbody').find_all('tr', attrs={"class": None}):
+        th = row.find('th', {'data-append-csv': True})
+        if th:
+            player_ids.append(th['data-append-csv'])
+        else:
+            player_ids.append(None)
+
     data = pd.read_html(StringIO(str(players_stats)))[0]
     data = data[:-2]  # remove the footer rows
 
@@ -121,21 +130,41 @@ for link in links:
     # add team name column
     data['Team'] = team_name
 
+    # add unique id column
+    data['player_uid'] = player_ids
+
     teams.append(team_name)
     nations.update(data['Nation'])
 
     for _, row in data.iterrows():
+        # skip the player with no uid
+        if row['player_uid'] is None:
+            continue
         pos_list = []
         if row['Pos'] is not None:
             pos_list = [pos.strip() for pos in row['Pos'].split(',')]
         try:
             cur.execute("""
                 INSERT INTO player_data (player_name, nation, positions, age, matches_played,
-                goals, assists, penalty_goals, yellow_card, red_card, expected_goals, expected_assists, team_name)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                goals, assists, penalty_goals, yellow_card, red_card, expected_goals, expected_assists, team_name, player_uid)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (player_uid) DO UPDATE SET
+                    player_name = EXCLUDED.player_name,
+                    nation = EXCLUDED.nation,
+                    positions = EXCLUDED.positions,
+                    age = EXCLUDED.age,
+                    matches_played = EXCLUDED.matches_played,
+                    goals = EXCLUDED.goals,
+                    assists = EXCLUDED.assists,
+                    penalty_goals = EXCLUDED.penalty_goals,
+                    yellow_card = EXCLUDED.yellow_card,
+                    red_card = EXCLUDED.red_card,
+                    expected_goals = EXCLUDED.expected_goals,
+                    expected_assists = EXCLUDED.expected_assists,
+                    team_name = EXCLUDED.team_name
             """, (row['Player'], row['Nation'], pos_list, row['Age'],
                   row['MP'], row['Gls'], row['Ast'], row['PK'], row['CrdY'],
-                  row['CrdR'], row['xG'], row['xAG'], row['Team']))
+                  row['CrdR'], row['xG'], row['xAG'], row['Team'], row['player_uid']))
             conn.commit()
         except Exception as e:
             conn.rollback()
@@ -149,6 +178,7 @@ for team in teams:
         cur.execute("""
             INSERT INTO teams (team_name)
             VALUES (%s)
+            ON CONFLICT (team_name) DO NOTHING
         """, (team,))
         conn.commit()
     except Exception as e:
@@ -160,6 +190,7 @@ for nation in nations:
         cur.execute("""
             INSERT INTO nations (nation)
             VALUES (%s)
+            ON CONFLICT (nation) DO NOTHING
         """, (nation,))
         conn.commit()
     except Exception as e:

@@ -27,4 +27,5 @@ public class PlayerEntity {
     private Double expected_goals;
     private Double expected_assists;
     private String team_name;
+    private String player_uid;
 }
