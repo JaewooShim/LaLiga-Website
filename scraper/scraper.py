@@ -19,7 +19,7 @@ options.add_argument("--disable-dev-shm-usage")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
 
 
-SELENIUM_URL = "http://selenium:4444/wd/hub/status"
+SELENIUM_URL = "http://localhost:4444/wd/hub/status"
 
 # Wait for Selenium to be ready
 for _ in range(30):
@@ -33,9 +33,8 @@ for _ in range(30):
 else:
     raise RuntimeError("Selenium server not ready after waiting.")
 
-
 driver = webdriver.Remote(
-    command_executor="http://selenium:4444/wd/hub",
+    command_executor="http://localhost:4444/wd/hub",
     options=options
 )
 
@@ -71,6 +70,7 @@ except TimeoutException:
 
 # only want the first table
 soup = BeautifulSoup(driver.page_source, 'lxml')
+
 overall_table = soup.find('table', 'stats_table')
 
 # extract urls for the squads stats
@@ -79,6 +79,8 @@ links = [f'https://fbref.com{link.get("href")}'for link in
 
 teams = []
 nations = set()
+
+driver.quit()
 
 for link in links:
     team_name = link.split('/')[-1].replace('-Stats', '').replace('-', ' ')
@@ -168,7 +170,6 @@ for link in links:
             conn.commit()
         except Exception as e:
             conn.rollback()
-
     # delaying each loop by 5 secs to avoid getting blocked from scrapping
     time.sleep(5)
 
@@ -199,3 +200,4 @@ for nation in nations:
 cur.close()
 conn.close()
 driver.quit()
+print("data inserted!!!!")

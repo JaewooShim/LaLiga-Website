@@ -21,18 +21,18 @@ create_repo_if_not_exists frontend
 create_repo_if_not_exists scraper
 create_repo_if_not_exists soccer-db
 
-docker build -t backend:latest ./backend
+docker build -t backend:latest ./backend --platform linux/arm64
 docker tag backend $REPO_URL/backend:latest
 docker push $REPO_URL/backend:latest
 
-docker build -t frontend:latest ./frontend/soccer-webpage
+docker build -t frontend:latest ./frontend/soccer-webpage --platform linux/arm64
 docker tag frontend $REPO_URL/frontend:latest
 docker push $REPO_URL/frontend:latest
 
-docker build -t scraper:latest ./scraper
+docker build -t scraper:latest ./scraper --platform linux/arm64
 docker tag scraper $REPO_URL/scraper:latest
 docker push $REPO_URL/scraper:latest
 
-docker build -t soccer-db:latest ./db
+docker build -t soccer-db:latest ./db --platform linux/arm64
 docker tag soccer-db:latest $REPO_URL/soccer-db:latest
 docker push $REPO_URL/soccer-db:latest
